@@ -1,0 +1,45 @@
+.cart-container {
+  width: 320px;
+  height: 400px;
+  margin-top: 58px;
+  border: 1px solid #E2E2E2;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cart-container h2 {
+  margin: 20px 0 20px 14px;
+  font-size: 24px;
+}
+
+.cart-container .total {
+  display: flex;
+  justify-content: left;
+  margin: 0;
+  padding: 0;
+}
+
+.cart-container .total .total-h2 {
+  font-style: normal;
+  font-weight: normal;
+  margin-left: 0;
+}
+
+.cart-container .total .total-value {
+  font-style: normal;
+  font-weight: normal;
+  margin-left: 0;
+}
+
+.save-button {
+  width: 320px;
+  height: 80px;
+  border: none;
+  font-size: 32px;
+  font-weight: bold;
+  color: #27C383;
+  background-color: #E2E2E2;
+}

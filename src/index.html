@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/header.css">
+  <link rel="stylesheet" href="styles/bet.css">
+  <link rel="stylesheet" href="styles/cart.css">
+  <link rel="stylesheet" href="styles/footer.css">
+
+  <title>The Greatest Lottery</title>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-left">
+        <div class="logo">
+          <h1>TGL</h1>
+          <div class="green-title-bar"></div>
+        </div>
+        <a class="navigation-home-button" href="/">Home</a>
+      </div>
+
+      <div class="navigation-bar">
+        <ul>
+          <li><a href="/">Account</a></li>
+          <li class="log-out-button">
+            <a href="/">Log out<img src="styles/icons/arrow-right.svg" /></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="bet-container">
+        <div class="title">
+          <h2>NEW BET&nbsp</h2>
+          <h2 class="for-game-name">FOR&nbsp</h2>
+          <h2 class="h2-game-name">MEGA-SENA</h2>
+        </div>
+  
+        <h2 class="subtitle">Choose a game</h2>
+        <div class="choose-game-buttons">
+          <div class="radio-toolbar lotofacil-button">
+            <input type="radio" id="huey" name="drone" value="huey"
+                   checked>
+            <label for="huey">Lotofácil</label>
+          </div>
+          
+          <div class="radio-toolbar megasena-button">
+            <input type="radio" id="dewey" name="drone" value="dewey">
+            <label for="dewey">Mega-Sena</label>
+          </div>
+          
+          <div class="radio-toolbar lotomania-button">
+            <input type="radio" id="louie" name="drone" value="louie">
+            <label for="louie">Lotomania</label>
+          </div>  
+        </div>
+
+        <h2 class="subtitle">Fill your bet</h2>
+        <p class="bet-description">Fill your bet Mark as many numbers as you want up to a maximum of 50. Win by hitting 15, 16, 17, 18, 19, 20 or none of the 20 numbers drawn.</p>
+
+        <div class="numbers">
+          <button class="number">01</button>
+          <button class="number">01</button>
+          <button class="number">01</button>
+          <button class="number">01</button>
+          <button class="number">01</button>
+          <button class="number">01</button>
+          <button class="number">01</button>
+          <button class="number">01</button>
+          <button class="number">01</button>
+          <button class="number">01</button>
+        </div>
+
+        <div class="game-buttons">
+          <div>
+            <button class="complete-clear-game-buttons">Complete game</button>
+            <button class="complete-clear-game-buttons">Clear game</button>
+          </div>
+          <div>
+            <button class="add-to-cart-button">
+              <img src="./styles/icons/shopping-cart.svg">
+              Add to cart
+            </button>
+          </div>
+        </div>
+  
+      </div>
+  
+      <div class="cart-container">
+        <div>
+          <h2>CART</h2>
+          <div class="items">
+          </div>
+          <div class="total">
+            <h2>CART&nbsp</h2>
+            <h2 class="total-h2">TOTAL:&nbsp</h2>
+            <h2 class="total-value">R$ 00,00</h2>
+          </div>
+        </div>
+
+        <div>
+          <button class="save-button">
+            Save
+            <img src="./styles/icons/arrow-right-green.svg">
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span>Copyright 2020 Luby Software</span>
+    </footer>
+  </div>
+
+
+  <script src="main.js"></script>
+</body>
+</html>
