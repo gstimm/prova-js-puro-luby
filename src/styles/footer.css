@@ -5,6 +5,7 @@ footer{
   height: 50px;
   width: 100%;
   
+  position: relative;
 
   border-top: 2px solid #EBEBEB;
 }

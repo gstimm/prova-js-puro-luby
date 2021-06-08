@@ -1,6 +1,7 @@
 .bet-container {
   width: 780px;
-  height: 800px;
+  height: 1140px;
+  position: relative;
 }
 
 h2 {
@@ -54,45 +55,37 @@ color: #707070;
   transition: filter 0.2s;
 }
 
-.lotofacil-button label {
+.lotofacil-button {
   color: #7F3992;
   border: 2px solid #7F3992;
 }
 
-.lotofacil-button input[type="radio"]:checked + label {
+input[type="radio"]:checked + label[class="lotofacil-button"] {
   background-color: #7F3992;
   color: #FFFFFF;
 }
 
-.lotofacil-button label:hover {
-  filter: brightness(0.9);
-}
-
-.megasena-button label {
+.megasena-button {
   color: #01AC66;
   border: 2px solid #01AC66;
 }
 
-.megasena-button input[type="radio"]:checked + label {
+input[type="radio"]:checked + label[class="megasena-button"] {
   background-color: #01AC66;
   color: #FFFFFF;
 }
 
-.megasena-button label:hover {
-  filter: brightness(0.9);
-}
-
-.lotomania-button label {
+.quina-button {
   color: #F79C31;
   border: 2px solid #F79C31;
 }
 
-.lotomania-button input[type="radio"]:checked + label {
+input[type="radio"]:checked + label[class="quina-button"] {
   background-color: #F79C31;
   color: #FFFFFF;
 }
 
-.lotomania-button label:hover {
+.radio-toolbar label:hover {
   filter: brightness(0.9);
 }
 
@@ -109,8 +102,15 @@ color: #707070;
   border: none;
   border-radius: 32px;
   margin-right: 4px;
+  margin-bottom: 16px;
   width: 64px;
   height:64px;
+
+  transition: filter 0.2s;
+}
+
+.number:hover {
+  filter: brightness(0.9);
 }
 
 .numbers {

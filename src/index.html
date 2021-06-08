@@ -36,45 +36,47 @@
     <div class="main-content">
       <div class="bet-container">
         <div class="title">
-          <h2>NEW BET&nbsp</h2>
-          <h2 class="for-game-name">FOR&nbsp</h2>
-          <h2 class="h2-game-name">MEGA-SENA</h2>
+          <h2 class="h2-game-name"><strong>NEW BET&nbsp</strong>FOR&nbsp<span data-js="game-name"></span></h2>
         </div>
   
         <h2 class="subtitle">Choose a game</h2>
         <div class="choose-game-buttons">
-          <div class="radio-toolbar lotofacil-button">
-            <input type="radio" id="huey" name="drone" value="huey"
-                   checked>
-            <label for="huey">Lotofácil</label>
-          </div>
-          
-          <div class="radio-toolbar megasena-button">
-            <input type="radio" id="dewey" name="drone" value="dewey">
-            <label for="dewey">Mega-Sena</label>
-          </div>
-          
-          <div class="radio-toolbar lotomania-button">
-            <input type="radio" id="louie" name="drone" value="louie">
-            <label for="louie">Lotomania</label>
-          </div>  
+          <div class="radio-toolbar" data-js="choose-game-buttons">
+            <input 
+              type="radio" 
+              id="lotofacil" 
+              name="radio-button" 
+              data-js="game-button"
+              value="0"
+              checked
+            >
+            <label class="lotofacil-button" for="lotofacil">Lotofácil</label>
+
+            <input 
+              type="radio" 
+              id="megasena" 
+              name="radio-button" 
+              data-js="game-button"
+              value="1"
+
+            >
+            <label class="megasena-button" for="megasena">Mega-Sena</label>
+
+            <input 
+              type="radio" 
+              id="quina" 
+              name="radio-button" 
+              data-js="game-button"
+              value="2"
+              >
+            <label class="quina-button" for="quina">Quina</label>
+          </div> 
         </div>
 
         <h2 class="subtitle">Fill your bet</h2>
-        <p class="bet-description">Fill your bet Mark as many numbers as you want up to a maximum of 50. Win by hitting 15, 16, 17, 18, 19, 20 or none of the 20 numbers drawn.</p>
+        <p class="bet-description" data-js="bet-description">Fill your bet Mark as many numbers as you want up to a maximum of 50. Win by hitting 15, 16, 17, 18, 19, 20 or none of the 20 numbers drawn.</p>
 
-        <div class="numbers">
-          <button class="number">01</button>
-          <button class="number">01</button>
-          <button class="number">01</button>
-          <button class="number">01</button>
-          <button class="number">01</button>
-          <button class="number">01</button>
-          <button class="number">01</button>
-          <button class="number">01</button>
-          <button class="number">01</button>
-          <button class="number">01</button>
-        </div>
+        <div class="numbers" data-js="numbers"></div>
 
         <div class="game-buttons">
           <div>
@@ -82,7 +84,7 @@
             <button class="complete-clear-game-buttons">Clear game</button>
           </div>
           <div>
-            <button class="add-to-cart-button">
+            <button type="submit" class="add-to-cart-button" data-js="add-to-cart-button">
               <img src="./styles/icons/shopping-cart.svg">
               Add to cart
             </button>
@@ -119,5 +121,6 @@
 
 
   <script src="main.js"></script>
+  <script src="utils/dom.js"></script>
 </body>
 </html>
