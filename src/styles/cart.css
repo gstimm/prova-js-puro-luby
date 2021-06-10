@@ -1,6 +1,6 @@
 .cart-container {
   width: 320px;
-  height: 400px;
+  height: 100%;
   margin-top: 58px;
   border: 1px solid #E2E2E2;
   border-radius: 10px;
@@ -42,4 +42,81 @@
   font-weight: bold;
   color: #27C383;
   background-color: #E2E2E2;
+}
+
+
+.bet-card {
+  margin: 0 auto;
+  width: 300px;
+  height: 70px;
+  margin-top: 30px;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.bet-card img {
+  display: inline-block;
+  width: 32px;
+  margin: 8px;
+  cursor: pointer;
+}
+
+.betLotofácil {
+  border-left: 4px solid #7F3992;
+  border-radius: 4px;
+}
+
+.betMega-Sena {
+  border-left: 4px solid #01AC66;
+  border-radius: 4px;
+}
+
+.betQuina {
+  border-left: 4px solid #F79C31;
+  border-radius: 4px;
+}
+
+.bet-cart-numbers {
+  color: #868686;
+  font-weight: bold;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.bet-price {
+  color: #868686;
+  font-style: normal;
+}
+
+.bet-name-Lotofácil {
+  color: #7F3992;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.bet-name-Mega-Sena {
+  color: #01AC66;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.bet-name-Quina {
+  color: #F79C31;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.bet-interior {
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 10px;
+}
+
+.bet-name-price {
+  display: flex;
+  justify-content: left;
 }

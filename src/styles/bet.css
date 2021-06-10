@@ -1,6 +1,6 @@
 .bet-container {
   width: 780px;
-  height: 1140px;
+  height: 100%;
   position: relative;
 }
 
@@ -29,64 +29,41 @@ color: #707070;
   font-weight: 400;
 }
 
-.radio-toolbar input[type="radio"] {
-  opacity: 0;
-  position: fixed;
-  width: 0;
-}
-
 .choose-game-buttons {
   display: flex;
 }
 
-.radio-toolbar label {
-  background-color: #FFFFFF;
+.game-button {
   width: 120px;
   height: 36px;
-  border-radius: 18px;
   font-size: 16px;
   font-weight: bold;
-  display: inline-block;
-  text-align: center;
-  padding-top: 8px;
-  cursor: pointer;
-  margin-right: 20px;
+  border-radius: 18px;
+  margin-right: 10px;
 
   transition: filter 0.2s;
 }
 
-.lotofacil-button {
-  color: #7F3992;
-  border: 2px solid #7F3992;
-}
-
-input[type="radio"]:checked + label[class="lotofacil-button"] {
-  background-color: #7F3992;
-  color: #FFFFFF;
-}
-
-.megasena-button {
-  color: #01AC66;
-  border: 2px solid #01AC66;
-}
-
-input[type="radio"]:checked + label[class="megasena-button"] {
-  background-color: #01AC66;
-  color: #FFFFFF;
-}
-
-.quina-button {
-  color: #F79C31;
-  border: 2px solid #F79C31;
-}
-
-input[type="radio"]:checked + label[class="quina-button"] {
-  background-color: #F79C31;
-  color: #FFFFFF;
-}
-
-.radio-toolbar label:hover {
+.game-button:hover {
   filter: brightness(0.9);
+}
+
+.Lotofácil {
+  border: 2px solid #7F3992;
+  background-color: #FFFFFF;
+  color: #7F3992;
+}
+
+.Mega-Sena {
+  border: 2px solid #01AC66;
+  background-color: #FFFFFF;
+  color:#01AC66;
+}
+
+.Quina {
+  border: 2px solid #F79C31;
+  background-color: #FFFFFF;
+  color:#F79C31;
 }
 
 .bet-description {

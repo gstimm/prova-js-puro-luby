@@ -22,7 +22,7 @@
         </div>
         <a class="navigation-home-button" href="/">Home</a>
       </div>
-
+  
       <div class="navigation-bar">
         <ul>
           <li><a href="/">Account</a></li>
@@ -35,56 +35,25 @@
 
     <div class="main-content">
       <div class="bet-container">
-        <div class="title">
+        <div class="title" data-js="new-bet-title">
           <h2 class="h2-game-name"><strong>NEW BET&nbsp</strong>FOR&nbsp<span data-js="game-name"></span></h2>
         </div>
   
         <h2 class="subtitle">Choose a game</h2>
-        <div class="choose-game-buttons">
-          <div class="radio-toolbar" data-js="choose-game-buttons">
-            <input 
-              type="radio" 
-              id="lotofacil" 
-              name="radio-button" 
-              data-js="game-button"
-              value="0"
-              checked
-            >
-            <label class="lotofacil-button" for="lotofacil">Lotofácil</label>
-
-            <input 
-              type="radio" 
-              id="megasena" 
-              name="radio-button" 
-              data-js="game-button"
-              value="1"
-
-            >
-            <label class="megasena-button" for="megasena">Mega-Sena</label>
-
-            <input 
-              type="radio" 
-              id="quina" 
-              name="radio-button" 
-              data-js="game-button"
-              value="2"
-              >
-            <label class="quina-button" for="quina">Quina</label>
-          </div> 
-        </div>
+        <div class="choose-game-buttons" data-js="choose-game-buttons"></div>
 
         <h2 class="subtitle">Fill your bet</h2>
-        <p class="bet-description" data-js="bet-description">Fill your bet Mark as many numbers as you want up to a maximum of 50. Win by hitting 15, 16, 17, 18, 19, 20 or none of the 20 numbers drawn.</p>
+        <p class="bet-description" data-js="bet-description"></p>
 
         <div class="numbers" data-js="numbers"></div>
 
         <div class="game-buttons">
           <div>
             <button class="complete-clear-game-buttons">Complete game</button>
-            <button class="complete-clear-game-buttons">Clear game</button>
+            <button class="complete-clear-game-buttons" data-js="clear-selected-numbers">Clear game</button>
           </div>
           <div>
-            <button type="submit" class="add-to-cart-button" data-js="add-to-cart-button">
+            <button class="add-to-cart-button" data-js="add-to-cart-button">
               <img src="./styles/icons/shopping-cart.svg">
               Add to cart
             </button>
@@ -96,7 +65,7 @@
       <div class="cart-container">
         <div>
           <h2>CART</h2>
-          <div class="items">
+          <div class="bets" data-js="bets">
           </div>
           <div class="total">
             <h2>CART&nbsp</h2>

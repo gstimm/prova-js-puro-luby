@@ -1,13 +1,20 @@
 (function (DOM, document) {
   'use strict';
   
-  const $chooseGameButton = document.querySelectorAll("input[name='radio-button']");
+  const $chooseGameButtons = document.querySelector('[data-js="choose-game-buttons"]');
   const $betDescription = document.querySelector('[data-js="bet-description"]');
   const $gameName = document.querySelector('[data-js="game-name"]');
+  const $numbersField = document.querySelector('[data-js="numbers"]');
 
-  let $numbersField = document.querySelector('[data-js="numbers"]');
+  const $bets = document.querySelector('[data-js="bets"]');
+
+  const $clearSelectedNumbers = document.querySelector('[data-js="clear-selected-numbers"]');
+  const $addToCartButton = document.querySelector('[data-js="add-to-cart-button"]');
 
   let games = [];
+  let selectedNumbers = [];
+  let selectedGame = {};
+  let bets = [];
 
   function init() {
     getGamesJSON();
@@ -17,35 +24,81 @@
     const ajax = new XMLHttpRequest();
     ajax.open('GET', '../games.json');
     ajax.send();
-    ajax.addEventListener('readystatechange', () => getAllGames(ajax), false);
+    ajax.addEventListener('readystatechange', () => getAllGames(ajax));
   }
 
   function getAllGames(ajax) {
     if (ajax.readyState === 4 && ajax.status === 200) {
       games = JSON.parse(ajax.responseText).types;
-      event.target.value = 0;
-      selectGameMode();
+      createGameButtons();
+      listenFunctionalButtons();
     };
   }
 
-  function selectGameMode() {
-    $chooseGameButton.forEach(game => {
-      game.addEventListener('change', selectGameMode);
+  function createGameButtons() {
+    games.forEach(game => {
+      $chooseGameButtons.insertAdjacentHTML(
+        'beforeend', 
+        `<button class="game-button ${game.type}" data-js="${game.type}" >
+          ${game.type}
+        </button>`
+      );
     });
-    
-    $betDescription.textContent = games[event.target.value].description;
-    $gameName.textContent = games[event.target.value].type.toUpperCase();
-    
-    console.log('Checked radio with ID = '+  event.target.value);
-    clearGameFields();
-    fillGameNumbers();
+    addClickEventToButtons();
+    addFirstAccessData();
   }
 
-  function fillGameNumbers() {
-    for (let value = 1; value <= games[event.target.value].range; value++) {
+  function addFirstAccessData() {
+    fillGameData(getGameInfo('Lotofácil')[0]);
+  }
+
+  function getGameInfo(gameName) {
+    return games.filter(game => {
+      return game.type === gameName;
+    })
+  }
+
+  function addClickEventToButtons() {
+    Array.prototype.forEach.call($chooseGameButtons.childNodes, (button, index) => {
+      button.addEventListener('click', () => {
+        // fillGameData(getGameInfo(button.dataset.js)[0]);
+        
+        let game = getGameInfo(button.dataset.js)[0];
+
+        fillGameData(game);
+        
+        $chooseGameButtons.childNodes.forEach((button, currentIndex) => {
+          if (currentIndex === index) {
+            button.style.backgroundColor = `${game.color}`;
+            button.style.color = 'white';
+          } 
+        })
+      });
+    })
+  }
+
+  function fillGameData(gameName) {
+    $betDescription.innerText = gameName.description;
+    $gameName.innerText = gameName.type.toUpperCase();
+
+    document.querySelector(`[data-js='${gameName.type}']`).classList.add(`${gameName.type}`);
+
+    Object.assign(selectedGame, gameName);
+
+    clearGameFields();
+    fillGameNumbers(gameName);
+    
+    selectedNumbers = [];
+    handleBetNumbers(gameName);
+  }
+
+  function fillGameNumbers(gameName) {
+    for (var index = 1; index <= gameName.range; index++) {
       $numbersField.insertAdjacentHTML(
-        'beforeend', 
-        `<button class="number" data-js="number" number="${value}">${value}</button>`
+        'beforeend',
+        `<button class="number" data-js=${index} value=${index}>
+          ${index}
+        </button>`
       );
     }
   }
@@ -54,6 +107,61 @@
     $numbersField.innerHTML = '';
   }
 
+  function handleBetNumbers(gameName) {
+    Array.prototype.forEach.call($numbersField.childNodes, button => {
+      button.addEventListener('click', () => {
+        var index = selectedNumbers.indexOf(Number(button.value));
+
+        if (index >= 0) {
+          selectedNumbers.splice(index, 1);
+        }
+
+        if (selectedNumbers.length < gameName['max-number']) {
+          selectedNumbers.push(Number(button.value));
+          button.setAttribute('style', `background-color: ${gameName.color}`);
+        }
+      })
+    })
+  }
+
+  function clearSelectedNumbers() {
+    selectedNumbers.forEach(number => {
+      document.querySelector(`[data-js='${number}']`).setAttribute('style', 'background-color: #ADC0C4;')
+    });
+    selectedNumbers = [];
+  }
+
+  function listenFunctionalButtons() {
+    // $completeGameBtn.addEventListener('click', completeGame);
+    $clearSelectedNumbers.addEventListener('click', clearSelectedNumbers);
+    $addToCartButton.addEventListener('click', addToCart);
+  }
+
+  function addToCart() {
+
+    bets.push(selectedNumbers);
+    console.log(bets);
+
+    createBet();
+
+    clearSelectedNumbers();
+  }
+
+
+
+  function createBet() {
+    $bets.insertAdjacentHTML('beforeend',
+      `<div class='bet-card' data-js='bet${selectedGame.type}'>
+        <img src='/src/styles/icons/trash-2.svg'/>
+        <div class="bet${selectedGame.type} bet-interior">
+          <span class="bet-cart-numbers">${selectedNumbers.sort((a, b) => a - b).join(', ')}</span>
+          <div class="bet-name-price">
+            <p class="bet-name-${selectedGame.type}">${selectedGame.type}</p>
+            <span class="bet-price">${String(selectedGame.price.toFixed(2)).replace('.', ',')}</span></div>
+        </div>
+      </div>`
+    )
+  }
 
 
   init();
