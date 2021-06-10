@@ -10,11 +10,16 @@
 
   const $clearSelectedNumbers = document.querySelector('[data-js="clear-selected-numbers"]');
   const $addToCartButton = document.querySelector('[data-js="add-to-cart-button"]');
+  const $completeGame = document.querySelector('[data-js="complete-game-numbers"]');
 
+  const $totalValueField = document.querySelector('[data-js="total-value"]');
+
+  let betId = 0;
   let games = [];
   let selectedNumbers = [];
   let selectedGame = {};
   let bets = [];
+  let betTotalValue = 0;
 
   function init() {
     getGamesJSON();
@@ -135,27 +140,28 @@
   }
 
   function listenFunctionalButtons() {
-    // $completeGameBtn.addEventListener('click', completeGame);
     $clearSelectedNumbers.addEventListener('click', clearSelectedNumbers);
     $addToCartButton.addEventListener('click', addToCart);
+    $completeGame.addEventListener('click', completeGame);
   }
 
   function addToCart() {
-
-    bets.push(selectedNumbers);
-    console.log(bets);
+    if (selectedNumbers.length !== selectedGame['max-number']) {
+      return alert('Preencha todos os números para adicionar o jogo ao carrinho!');
+    }
 
     createBet();
+    betId += 1;
+
+    changeTotalValue();
 
     clearSelectedNumbers();
   }
 
-
-
   function createBet() {
     $bets.insertAdjacentHTML('beforeend',
-      `<div class="bet-card" data-js="bet${selectedGame.type}">
-        <img src="/src/styles/icons/trash-2.svg"/>
+      `<div class="bet-card" data-id="${betId}" data-js="bet${selectedGame.type}">
+        <img data-js="remove-bet-from-cart" src="/src/styles/icons/trash-2.svg"/>
         <div class="bet${selectedGame.type} bet-interior">
           <span class="bet-cart-numbers">${selectedNumbers.sort((a, b) => a - b).join(', ')}</span>
           <div class="bet-name-price">
@@ -163,9 +169,44 @@
             <span class="bet-price">${String(selectedGame.price.toFixed(2)).replace('.', ',')}</span></div>
         </div>
       </div>`
-    )
+    );
+
+    betTotalValue += selectedGame.price;
+
+    const betToBeRemoved = document.querySelector(`[data-id="${betId}"]`);
+    
+    betToBeRemoved.addEventListener('click', () => {
+      if(betToBeRemoved.dataset.js === 'betLotofácil')
+        betTotalValue -= 2.5;
+      if(betToBeRemoved.dataset.js === 'betMega-Sena')
+        betTotalValue -= 4.5;
+      if(betToBeRemoved.dataset.js === 'betQuina')
+        betTotalValue -= 2;
+
+      changeTotalValue(selectedGame.price);
+      
+      betToBeRemoved.remove();
+    });
   }
 
+  function changeTotalValue() {
+    $totalValueField.textContent = String(betTotalValue.toFixed(2)).replace('.', ',');
+  }
+
+  function completeGame() {
+    let randomBet = [];
+    while(selectedNumbers.length < selectedGame['max-number']) {
+      randomBet = Math.ceil(Math.random() * (selectedGame.range));
+      if(!isInCurrentBet(randomBet))
+        document.querySelector(`[data-js='${randomBet}']`).click();
+    }
+  }
+
+  function isInCurrentBet(number) {
+    return selectedNumbers.some(item => {
+      return number === item;
+    })
+  }
 
   init();
 

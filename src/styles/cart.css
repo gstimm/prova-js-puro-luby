@@ -22,10 +22,10 @@
   padding: 0;
 }
 
-.cart-container .total .total-h2 {
+.cart-container .total .h2-total-value {
   font-style: normal;
   font-weight: normal;
-  margin-left: 0;
+  margin-left: 14px;
 }
 
 .cart-container .total .total-value {
