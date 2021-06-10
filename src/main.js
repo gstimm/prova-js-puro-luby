@@ -44,8 +44,8 @@
         </button>`
       );
     });
-    addClickEventToButtons();
-    addFirstAccessData();
+    addClickEventAndChangeButtonColor();
+    addFirstAccessData(changeSelectedButtonColor(0));
   }
 
   function addFirstAccessData() {
@@ -58,22 +58,27 @@
     })
   }
 
-  function addClickEventToButtons() {
+  function addClickEventAndChangeButtonColor() {
     Array.prototype.forEach.call($chooseGameButtons.childNodes, (button, index) => {
       button.addEventListener('click', () => {
-        // fillGameData(getGameInfo(button.dataset.js)[0]);
-        
-        let game = getGameInfo(button.dataset.js)[0];
-
-        fillGameData(game);
-        
-        $chooseGameButtons.childNodes.forEach((button, currentIndex) => {
-          if (currentIndex === index) {
-            button.style.backgroundColor = `${game.color}`;
-            button.style.color = 'white';
-          } 
-        })
+        const gameName = getGameInfo(button.dataset.js)[0];
+        fillGameData(gameName);
+        changeSelectedButtonColor(index);
       });
+    })
+  }
+
+  function changeSelectedButtonColor(index) {
+    $chooseGameButtons.childNodes.forEach((button, currentIndex) => {
+      const game = getGameInfo(button.dataset.js)[0];
+      
+      if (currentIndex === index) {
+        button.style.backgroundColor = `${game.color}`;
+        button.style.color = 'white';
+      } else {
+        button.style.backgroundColor = 'white';
+        button.style.color = `${game.color}`;
+      } 
     })
   }
 
@@ -81,11 +86,9 @@
     $betDescription.innerText = gameName.description;
     $gameName.innerText = gameName.type.toUpperCase();
 
-    document.querySelector(`[data-js='${gameName.type}']`).classList.add(`${gameName.type}`);
-
     Object.assign(selectedGame, gameName);
 
-    clearGameFields();
+    clearNumbersField();
     fillGameNumbers(gameName);
     
     selectedNumbers = [];
@@ -96,14 +99,14 @@
     for (var index = 1; index <= gameName.range; index++) {
       $numbersField.insertAdjacentHTML(
         'beforeend',
-        `<button class="number" data-js=${index} value=${index}>
+        `<button class="number" data-js="${index}" value="${index}">
           ${index}
         </button>`
       );
     }
   }
 
-  function clearGameFields() {
+  function clearNumbersField() {
     $numbersField.innerHTML = '';
   }
 
@@ -126,7 +129,7 @@
 
   function clearSelectedNumbers() {
     selectedNumbers.forEach(number => {
-      document.querySelector(`[data-js='${number}']`).setAttribute('style', 'background-color: #ADC0C4;')
+      document.querySelector(`[data-js="${number}"]`).setAttribute('style', 'background-color: #ADC0C4;')
     });
     selectedNumbers = [];
   }
@@ -151,8 +154,8 @@
 
   function createBet() {
     $bets.insertAdjacentHTML('beforeend',
-      `<div class='bet-card' data-js='bet${selectedGame.type}'>
-        <img src='/src/styles/icons/trash-2.svg'/>
+      `<div class="bet-card" data-js="bet${selectedGame.type}">
+        <img src="/src/styles/icons/trash-2.svg"/>
         <div class="bet${selectedGame.type} bet-interior">
           <span class="bet-cart-numbers">${selectedNumbers.sort((a, b) => a - b).join(', ')}</span>
           <div class="bet-name-price">
