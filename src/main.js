@@ -1,4 +1,4 @@
-(function (DOM, document) {
+(function () {
   'use strict';
   
   const $chooseGameButtons = document.querySelector('[data-js="choose-game-buttons"]');
@@ -15,11 +15,11 @@
 
   const $totalValueField = document.querySelector('[data-js="total-value"]');
 
-  let betId = 0;
+  let selectedGame = {};
   let games = [];
   let selectedNumbers = [];
-  let selectedGame = {};
   let bets = [];
+  let betId = 0;
   let betTotalValue = 0;
 
   function init() {
@@ -55,7 +55,7 @@
   }
 
   function addFirstAccessData() {
-    fillGameData(getGameInfo('Lotofácil')[0]);
+    fillGameData(getGameInfo(games[0].type)[0]);
   }
 
   function getGameInfo(gameName) {
@@ -65,7 +65,7 @@
   }
 
   function addClickEventAndChangeButtonColor() {
-    Array.prototype.forEach.call($chooseGameButtons.childNodes, (button, index) => {
+    $chooseGameButtons.childNodes.forEach((button, index) => {
       button.addEventListener('click', () => {
         const gameName = getGameInfo(button.dataset.js)[0];
         fillGameData(gameName);
@@ -77,14 +77,10 @@
   function changeSelectedButtonColor(index) {
     $chooseGameButtons.childNodes.forEach((button, currentIndex) => {
       const game = getGameInfo(button.dataset.js)[0];
-      
-      if (currentIndex === index) {
-        button.style.backgroundColor = `${game.color}`;
-        button.style.color = 'white';
-      } else {
-        button.style.backgroundColor = 'white';
-        button.style.color = `${game.color}`;
-      } 
+
+      currentIndex === index
+        ? button.setAttribute('style', `background-color: ${game.color}; color: #FFFFFF`)
+        : button.setAttribute('style', `background-color: #FFFFFF; color: ${game.color}`);
     })
   }
 
@@ -117,18 +113,27 @@
   }
 
   function handleBetNumbers(gameName) {
-    Array.prototype.forEach.call($numbersField.childNodes, button => {
+    $numbersField.childNodes.forEach(button => {
       button.addEventListener('click', () => {
         var index = selectedNumbers.indexOf(Number(button.value));
         if (index >= 0) {
           selectedNumbers.splice(index, 1);
-        }
-        if (selectedNumbers.length < gameName['max-number']) {
-          selectedNumbers.push(Number(button.value));
-          button.setAttribute('style', `background-color: ${gameName.color}`);
+          button.setAttribute('style', 'background-color: #ADC0C4;');
+        } else {
+          if (selectedNumbers.length < gameName['max-number']) {
+            selectedNumbers.push(Number(button.value));
+            button.setAttribute('style', `background-color: ${gameName.color}`);
+          }
         }
       })
     })
+  }
+
+  function listenFunctionalButtons() {
+    $clearSelectedNumbers.addEventListener('click', clearSelectedNumbers);
+    $addToCartButton.addEventListener('click', addToCart);
+    $completeGame.addEventListener('click', completeGame);
+    $saveButton.addEventListener('click', saveGame);
   }
 
   function clearSelectedNumbers() {
@@ -137,13 +142,6 @@
         .setAttribute('style', 'background-color: #ADC0C4;')
     });
     selectedNumbers = [];
-  }
-
-  function listenFunctionalButtons() {
-    $clearSelectedNumbers.addEventListener('click', clearSelectedNumbers);
-    $addToCartButton.addEventListener('click', addToCart);
-    $completeGame.addEventListener('click', completeGame);
-    $saveButton.addEventListener('click', saveGame);
   }
 
   function addToCart() {
@@ -195,7 +193,7 @@
         if(betToBeRemoved.dataset.js === `bet${games[index].type}`) {
           betTotalValue -= games[index].price;
         }
-        changeTotalValue(selectedGame.price);
+        changeTotalValue();
         betToBeRemoved.remove();
       }
     })
@@ -206,11 +204,12 @@
   }
 
   function completeGame() {
-    let randomBetNumbers = [];
+    let randomNumber = 0;
     while(selectedNumbers.length < selectedGame['max-number']) {
-      randomBetNumbers = Math.ceil(Math.random() * (selectedGame.range));
-      if(!isInCurrentBet(randomBetNumbers))
-        document.querySelector(`[data-js='${randomBetNumbers}']`).click();
+      randomNumber = Math.ceil(Math.random() * (selectedGame.range));
+      if(!isInCurrentBet(randomNumber)) {
+        document.querySelector(`[data-js='${randomNumber}']`).click();
+      }
     }
   }
 
@@ -221,16 +220,16 @@
   }
 
   function saveGame() {
-    console.log(bets)
-    if ($bets.childNodes.length <= 1) {
+    if (bets.length === 0) {
       return alert('Seu carrinho está vazio!');
     }
-
-
-
-    
+    bets = [];
+    $bets.innerHTML = '';
+    betTotalValue = 0;
+    changeTotalValue();
+    clearSelectedNumbers();
   }
 
   init();
 
-})(window.DOM, document);
+})();
