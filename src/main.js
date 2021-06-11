@@ -119,6 +119,10 @@
   function handleBetNumbers(gameName) {
     Array.prototype.forEach.call($numbersField.childNodes, button => {
       button.addEventListener('click', () => {
+        var index = selectedNumbers.indexOf(Number(button.value));
+        if (index >= 0) {
+          selectedNumbers.splice(index, 1);
+        }
         if (selectedNumbers.length < gameName['max-number']) {
           selectedNumbers.push(Number(button.value));
           button.setAttribute('style', `background-color: ${gameName.color}`);
@@ -167,12 +171,8 @@
     bets.push({
       "id": betId,
       "type": selectedGame.type,
-      "description": selectedGame.description,
-      "range": selectedGame.range,
       "price": selectedGame.price,
-      "max-number": selectedGame['max-number'],
-      "color": selectedGame.color,
-      "min-cart-value": selectedGame['min-cart-value']
+      "numbers": selectedNumbers.sort((a, b) => a - b).join(', '),
     })
 
     console.log(bets)
@@ -187,11 +187,14 @@
     const betToBeRemoved = document.querySelector(`[data-id="${betId}"]`);
 
     betToBeRemoved.addEventListener('click', () => {
+      bets = bets.filter(bet => {
+        return bet.id !== Number(betToBeRemoved.dataset.id)
+      })
+
       for (let index = 0; index < games.length; index++) {
         if(betToBeRemoved.dataset.js === `bet${games[index].type}`) {
           betTotalValue -= games[index].price;
         }
-
         changeTotalValue(selectedGame.price);
         betToBeRemoved.remove();
       }
@@ -218,12 +221,12 @@
   }
 
   function saveGame() {
+    console.log(bets)
     if ($bets.childNodes.length <= 1) {
       return alert('Seu carrinho está vazio!');
     }
 
 
-    console.log($bets.childNodes)
 
     
   }
