@@ -11,6 +11,7 @@
   const $clearSelectedNumbers = document.querySelector('[data-js="clear-selected-numbers"]');
   const $addToCartButton = document.querySelector('[data-js="add-to-cart-button"]');
   const $completeGame = document.querySelector('[data-js="complete-game-numbers"]');
+  const $saveButton = document.querySelector('[data-js="save-button"]');
 
   const $totalValueField = document.querySelector('[data-js="total-value"]');
 
@@ -118,12 +119,6 @@
   function handleBetNumbers(gameName) {
     Array.prototype.forEach.call($numbersField.childNodes, button => {
       button.addEventListener('click', () => {
-        var index = selectedNumbers.indexOf(Number(button.value));
-
-        if (index >= 0) {
-          selectedNumbers.splice(index, 1);
-        }
-
         if (selectedNumbers.length < gameName['max-number']) {
           selectedNumbers.push(Number(button.value));
           button.setAttribute('style', `background-color: ${gameName.color}`);
@@ -134,7 +129,8 @@
 
   function clearSelectedNumbers() {
     selectedNumbers.forEach(number => {
-      document.querySelector(`[data-js="${number}"]`).setAttribute('style', 'background-color: #ADC0C4;')
+      document.querySelector(`[data-js="${number}"]`)
+        .setAttribute('style', 'background-color: #ADC0C4;')
     });
     selectedNumbers = [];
   }
@@ -143,18 +139,15 @@
     $clearSelectedNumbers.addEventListener('click', clearSelectedNumbers);
     $addToCartButton.addEventListener('click', addToCart);
     $completeGame.addEventListener('click', completeGame);
+    $saveButton.addEventListener('click', saveGame);
   }
 
   function addToCart() {
     if (selectedNumbers.length !== selectedGame['max-number']) {
       return alert('Preencha todos os números para adicionar o jogo ao carrinho!');
     }
-
     createBet();
     betId += 1;
-
-    changeTotalValue();
-
     clearSelectedNumbers();
   }
 
@@ -171,22 +164,38 @@
       </div>`
     );
 
+    bets.push({
+      "id": betId,
+      "type": selectedGame.type,
+      "description": selectedGame.description,
+      "range": selectedGame.range,
+      "price": selectedGame.price,
+      "max-number": selectedGame['max-number'],
+      "color": selectedGame.color,
+      "min-cart-value": selectedGame['min-cart-value']
+    })
+
+    console.log(bets)
+
     betTotalValue += selectedGame.price;
 
-    const betToBeRemoved = document.querySelector(`[data-id="${betId}"]`);
-    
-    betToBeRemoved.addEventListener('click', () => {
-      if(betToBeRemoved.dataset.js === 'betLotofácil')
-        betTotalValue -= 2.5;
-      if(betToBeRemoved.dataset.js === 'betMega-Sena')
-        betTotalValue -= 4.5;
-      if(betToBeRemoved.dataset.js === 'betQuina')
-        betTotalValue -= 2;
+    changeTotalValue();
+    removeBetFromCart();
+  }
 
-      changeTotalValue(selectedGame.price);
-      
-      betToBeRemoved.remove();
-    });
+  function removeBetFromCart() {
+    const betToBeRemoved = document.querySelector(`[data-id="${betId}"]`);
+
+    betToBeRemoved.addEventListener('click', () => {
+      for (let index = 0; index < games.length; index++) {
+        if(betToBeRemoved.dataset.js === `bet${games[index].type}`) {
+          betTotalValue -= games[index].price;
+        }
+
+        changeTotalValue(selectedGame.price);
+        betToBeRemoved.remove();
+      }
+    })
   }
 
   function changeTotalValue() {
@@ -194,11 +203,11 @@
   }
 
   function completeGame() {
-    let randomBet = [];
+    let randomBetNumbers = [];
     while(selectedNumbers.length < selectedGame['max-number']) {
-      randomBet = Math.ceil(Math.random() * (selectedGame.range));
-      if(!isInCurrentBet(randomBet))
-        document.querySelector(`[data-js='${randomBet}']`).click();
+      randomBetNumbers = Math.ceil(Math.random() * (selectedGame.range));
+      if(!isInCurrentBet(randomBetNumbers))
+        document.querySelector(`[data-js='${randomBetNumbers}']`).click();
     }
   }
 
@@ -206,6 +215,17 @@
     return selectedNumbers.some(item => {
       return number === item;
     })
+  }
+
+  function saveGame() {
+    if ($bets.childNodes.length <= 1) {
+      return alert('Seu carrinho está vazio!');
+    }
+
+
+    console.log($bets.childNodes)
+
+    
   }
 
   init();
