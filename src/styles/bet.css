@@ -40,30 +40,13 @@ color: #707070;
   font-weight: bold;
   border-radius: 18px;
   margin-right: 10px;
+  background-color: #FFFFFF;
 
   transition: filter 0.2s;
 }
 
 .game-button:hover {
   filter: brightness(0.9);
-}
-
-.Lotofácil {
-  border: 2px solid #7F3992;
-  background-color: #FFFFFF;
-  color: #7F3992;
-}
-
-.Mega-Sena {
-  border: 2px solid #01AC66;
-  background-color: #FFFFFF;
-  color:#01AC66;
-}
-
-.Quina {
-  border: 2px solid #F79C31;
-  background-color: #FFFFFF;
-  color:#F79C31;
 }
 
 .bet-description {

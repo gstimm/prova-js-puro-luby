@@ -45,14 +45,22 @@
     games.forEach(game => {
       $chooseGameButtons.insertAdjacentHTML(
         'beforeend', 
-        `<button class="game-button ${game.type}" data-js="${game.type}" >
+        `<button class="game-button" data-js="${game.type}" >
           ${game.type}
         </button>`
       );
     });
     addClickEventAndChangeButtonColor();
+    // addColorStyleForButtons();
     addFirstAccessData(changeSelectedButtonColor(0));
   }
+
+  // function addColorStyleForButtons() {
+  //   $chooseGameButtons.childNodes.forEach((button, index) => {
+  //     console.log(button)
+  //     button.setAttribute("style", "color: #F00;");
+  //   })
+  // }
 
   function addFirstAccessData() {
     fillGameData(getGameInfo(games[0].type)[0]);
@@ -78,9 +86,18 @@
     $chooseGameButtons.childNodes.forEach((button, currentIndex) => {
       const game = getGameInfo(button.dataset.js)[0];
 
-      currentIndex === index
-        ? button.setAttribute('style', `background-color: ${game.color}; color: #FFFFFF`)
-        : button.setAttribute('style', `background-color: #FFFFFF; color: ${game.color}`);
+      if (currentIndex === index) {
+        button.setAttribute(
+          'style', 
+          `background-color: ${game.color}; 
+            color: #FFFFFF; 
+            border: 2px solid ${game.color};`)
+      } else {
+        button.setAttribute('style', 
+        `background-color: #FFFFFF; 
+          color: ${game.color};  
+          border: 2px solid ${game.color};`);
+      }
     })
   }
 
@@ -157,10 +174,10 @@
     $bets.insertAdjacentHTML('beforeend',
       `<div class="bet-card" data-id="${betId}" data-js="bet${selectedGame.type}">
         <img data-js="remove-bet-from-cart" src="/src/styles/icons/trash-2.svg"/>
-        <div class="bet${selectedGame.type} bet-interior">
+        <div class="bet${selectedGame.type} bet-interior" style="border-left: 4px solid ${selectedGame.color}; border-radius: 4px;">
           <span class="bet-cart-numbers">${selectedNumbers.sort((a, b) => a - b).join(', ')}</span>
           <div class="bet-name-price">
-            <p class="bet-name-${selectedGame.type}">${selectedGame.type}</p>
+            <p class="bet-name" style="color: ${selectedGame.color}">${selectedGame.type}</p>
             <span class="bet-price">${String(selectedGame.price.toFixed(2)).replace('.', ',')}</span></div>
         </div>
       </div>`
@@ -223,6 +240,11 @@
     if (bets.length === 0) {
       return alert('Seu carrinho está vazio!');
     }
+
+    if (betTotalValue < games[0]['min-cart-value']) {
+      return alert('O valor mínimo de aposta é de R$ 30,00.');
+    }
+
     bets = [];
     $bets.innerHTML = '';
     betTotalValue = 0;

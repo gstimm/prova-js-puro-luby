@@ -63,21 +63,6 @@
   cursor: pointer;
 }
 
-.betLotofácil {
-  border-left: 4px solid #7F3992;
-  border-radius: 4px;
-}
-
-.betMega-Sena {
-  border-left: 4px solid #01AC66;
-  border-radius: 4px;
-}
-
-.betQuina {
-  border-left: 4px solid #F79C31;
-  border-radius: 4px;
-}
-
 .bet-cart-numbers {
   color: #868686;
   font-weight: bold;
@@ -90,20 +75,7 @@
   font-style: normal;
 }
 
-.bet-name-Lotofácil {
-  color: #7F3992;
-  font-weight: bold;
-  margin-right: 20px;
-}
-
-.bet-name-Mega-Sena {
-  color: #01AC66;
-  font-weight: bold;
-  margin-right: 20px;
-}
-
-.bet-name-Quina {
-  color: #F79C31;
+.bet-name {
   font-weight: bold;
   margin-right: 20px;
 }
